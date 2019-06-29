@@ -25,11 +25,11 @@ public class GroupCreationTests {
     initGroupCreation();
     fillGroupForm(new GroupData("TestGroup", "test1", "test2"));
     submitGroupCreation();
-    returnToGroupPage();
-    wd.findElement(By.linkText("Выйти")).click();
+    returnToHomePage();
+    wd.findElement(By.linkText("Logout")).click();
   }
 
-  private void returnToGroupPage() {
+  private void returnToHomePage() {
     wd.findElement(By.linkText("group page")).click();
   }
 
@@ -52,7 +52,7 @@ public class GroupCreationTests {
   }
 
   private void gotoGroupPage() {
-    wd.findElement(By.linkText("Группы")).click();
+    wd.findElement(By.linkText("groups")).click();
   }
 
   private void login(String username, String password) {
