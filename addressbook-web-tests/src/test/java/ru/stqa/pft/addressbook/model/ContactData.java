@@ -17,13 +17,9 @@ public class ContactData {
     this.emailaddress = emailaddress;
   }
 
-  public String getFirstname() {
-    return firstname;
-  }
+  public String getFirstname() { return firstname; }
 
-  public String getLasname() {
-    return lasname;
-  }
+  public String getLasname() { return lasname; }
 
   public String getHomephone() {
     return homephone;
