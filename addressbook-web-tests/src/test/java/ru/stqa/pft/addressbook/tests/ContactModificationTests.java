@@ -9,8 +9,8 @@ public class ContactModificationTests extends TestBase {
   public void testContactModification() {
     app.contactHelper.selectContact();
     app.contactHelper.initContactModification();
-    app.contactHelper.fillContactForm(new ContactData("first", "surname", "88124561236", "79126789023", "88123128547", "first.surname@gmail.com"));
+    app.contactHelper.fillContactForm(new ContactData("first", "surname", "88124561236", "79126789023", "88123128547", "first.surname@gmail.com", null), false);
     app.contactHelper.submitContactModification();
-    app.navigationHelper.returtToHomePage();
+    app.navigationHelper.returnToHomePage();
   }
 }
