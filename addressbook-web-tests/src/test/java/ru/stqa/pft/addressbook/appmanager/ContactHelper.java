@@ -17,18 +17,22 @@ public class ContactHelper extends BaseHelper {
   }
 
   public void fillContactForm(ContactData contactData, boolean creation) {
-    type(By.name("firstname"), contactData.getFirstname());
-    type(By.name("lastname"), contactData.getLasname());
-    type(By.name("home"), contactData.getHomephone());
-    type(By.name("mobile"), contactData.getMobilephone());
-    type(By.name("work"), contactData.getWorkphone());
-    type(By.name("email"), contactData.getEmailaddress());
+    type(By.name("firstname"), contactData.getFirstName());
+    type(By.name("lastname"), contactData.getLastName());
+    type(By.name("home"), contactData.getHomePhone());
+    type(By.name("mobile"), contactData.getMobilePhone());
+    type(By.name("work"), contactData.getWorkPhone());
+    type(By.name("email"), contactData.getEmailAddress());
 
     if (creation) {
       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
+  }
+
+  public void gotoCreateContactPage() {
+    click(By.linkText("add new"));
   }
 
   public void selectContact() {
@@ -50,5 +54,15 @@ public class ContactHelper extends BaseHelper {
 
   public void acceptAlert() {
     wd.switchTo().alert().accept();
+  }
+
+  public void createContact(ContactData contact, boolean creation) {
+    gotoCreateContactPage();
+    fillContactForm(contact, creation);
+    submitContactCreation();
+  }
+
+  public boolean isThereAContact() {
+    return isElementPresent(By.name("selected[]"));
   }
 }

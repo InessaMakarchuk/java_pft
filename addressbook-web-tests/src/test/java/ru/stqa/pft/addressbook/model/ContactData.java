@@ -19,23 +19,23 @@ public class ContactData {
     this.group = group;
   }
 
-  public String getFirstname() { return firstname; }
+  public String getFirstName() { return firstname; }
 
-  public String getLasname() { return lasname; }
+  public String getLastName() { return lasname; }
 
-  public String getHomephone() {
+  public String getHomePhone() {
     return homephone;
   }
 
-  public String getMobilephone() {
+  public String getMobilePhone() {
     return mobilephone;
   }
 
-  public String getWorkphone() {
+  public String getWorkPhone() {
     return workphone;
   }
 
-  public String getEmailaddress() {
+  public String getEmailAddress() {
     return emailaddress;
   }
 
