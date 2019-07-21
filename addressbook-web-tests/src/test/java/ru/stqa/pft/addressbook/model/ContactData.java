@@ -3,43 +3,57 @@ package ru.stqa.pft.addressbook.model;
 import java.util.Objects;
 
 public class ContactData {
-  private int id;
-  private final String firstName;
-  private final String lastName;
-  private final String homePhone;
-  private final String mobilePhone;
-  private final String workPhone;
-  private final String emailAddress;
+  private int id = Integer.MAX_VALUE;
+  private String firstName;
+  private String lastName;
+  private String homePhone;
+  private String mobilePhone;
+  private String workPhone;
+  private String emailAddress;
   private String group;
 
-  public void setId(int id) {
+  public ContactData withId(int id) {
     this.id = id;
+    return this;
+  }
+
+  public ContactData withFirstName(String firstName) {
+    this.firstName = firstName;
+    return this;
+  }
+
+  public ContactData withLastName(String lastName) {
+    this.lastName = lastName;
+    return this;
+  }
+
+  public ContactData withHomePhone(String homePhone) {
+    this.homePhone = homePhone;
+    return this;
+  }
+
+  public ContactData withMobilePhone(String mobilePhone) {
+    this.mobilePhone = mobilePhone;
+    return this;
+  }
+
+  public ContactData withWorkPhone(String workPhone) {
+    this.workPhone = workPhone;
+    return this;
+  }
+
+  public ContactData withEmailAddress(String emailAddress) {
+    this.emailAddress = emailAddress;
+    return this;
+  }
+
+  public ContactData withGroup(String group) {
+    this.group = group;
+    return this;
   }
 
     public int getId() {
     return id;
-  }
-
-  public ContactData(int id, String firstName, String lastName, String homePhone, String mobilePhone, String workPhone, String emailAddress, String group) {
-    this.id = id;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.homePhone = homePhone;
-    this.mobilePhone = mobilePhone;
-    this.workPhone = workPhone;
-    this.emailAddress = emailAddress;
-    this.group = group;
-  }
-
-  public ContactData(String firstName, String lastName, String homePhone, String mobilePhone, String workPhone, String emailAddress, String group) {
-    this.id = Integer.MAX_VALUE;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.homePhone = homePhone;
-    this.mobilePhone = mobilePhone;
-    this.workPhone = workPhone;
-    this.emailAddress = emailAddress;
-    this.group = group;
   }
 
   public String getFirstName() { return firstName; }
