@@ -21,7 +21,7 @@ public class NavigationHelper extends BaseHelper {
   }
 
 
-  public void returnToHomePage() {
+  public void homePage() {
     if (isElementPresent(By.id("maintable"))) {
       return;
     }
