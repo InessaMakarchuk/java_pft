@@ -7,7 +7,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+
 import java.util.List;
+
 import static ru.stqa.pft.addressbook.tests.TestBase.app;
 
 public class ContactHelper extends BaseHelper {
@@ -33,7 +35,12 @@ public class ContactHelper extends BaseHelper {
     type(By.name("email3"), contactData.getEmailAddress3());
 
     if (creation) {
-      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+
+      if (contactData.getGroup() != null) {
+        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      } else {
+        new Select(wd.findElement(By.cssSelector("select[name='new_group']"))).selectByIndex(1);
+      }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
@@ -100,7 +107,7 @@ public class ContactHelper extends BaseHelper {
 
   public Contacts all() {
     if (contactCache != null) {
-      return  new Contacts(contactCache);
+      return new Contacts(contactCache);
     }
 
     contactCache = new Contacts();
@@ -115,7 +122,7 @@ public class ContactHelper extends BaseHelper {
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
 /*    contactCache.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withAddress(address)
               .withHomePhone(phones[0]).withMobilePhone(phones[1]).withWorkPhone(phones[2])); */
-     contactCache.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withAddress(address).withAllPhones(allPhones).withAllEmailAddresses(allEmailAddresses));
+      contactCache.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withAddress(address).withAllPhones(allPhones).withAllEmailAddresses(allEmailAddresses));
     }
     return new Contacts(contactCache);
   }
