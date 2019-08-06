@@ -9,7 +9,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.GroupData;
-
 import java.util.List;
 
 public class HbConnectionTests {
@@ -38,7 +37,7 @@ public class HbConnectionTests {
     Session session = sessionFactory.openSession();
     session.beginTransaction();
     List<GroupData> result = session.createQuery("from GroupData where deprecated = '0000-00-00'").list();
-    for ( GroupData group : result ) {
+    for (GroupData group : result) {
       System.out.println(group);
     }
     session.getTransaction().commit();

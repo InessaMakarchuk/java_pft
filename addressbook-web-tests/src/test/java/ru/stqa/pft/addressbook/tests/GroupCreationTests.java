@@ -55,12 +55,25 @@ public class GroupCreationTests extends TestBase {
   public void testGroupCreation(GroupData group) throws Exception {
     app.goTo().groupPage();
     Groups before = app.db().groups();
+    Groups beforedb = new Groups(before.stream()
+            .map((g) -> new GroupData().withId(g.getId()).withName(g.getName())
+                    .withHeader(g.getHeader().replace("\r\n", "\n"))
+                    .withFooter(g.getFooter().replace("\r\n", "\n")))
+            .collect(Collectors.toSet()));
     app.group().create(group);
     Groups after = app.db().groups();
+    Groups afterdb = new Groups(after.stream()
+            .map((g) -> new GroupData().withId(g.getId()).withName(g.getName())
+                    .withHeader(g.getHeader().replace("\r\n", "\n"))
+                    .withFooter(g.getFooter().replace("\r\n", "\n")))
+            .collect(Collectors.toSet()));
     assertThat(app.group().count(), equalTo(before.size() + 1));
-    assertThat(after.stream().sorted(Comparator.comparing(GroupData :: getId)).collect(Collectors.toList()), equalTo(
-            before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))
-                    .stream().sorted(Comparator.comparing(GroupData::getId)).collect(Collectors.toList())));
+    assertThat(afterdb.stream()
+                    .sorted(Comparator.comparing(GroupData :: getId))
+                    .collect(Collectors.toList()),
+            equalTo(beforedb.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt())).stream()
+                    .sorted(Comparator.comparing(GroupData::getId))
+                    .collect(Collectors.toList())));
   }
 
   @Test(enabled = false)

@@ -37,23 +37,25 @@ public class ContactCreationTests extends TestBase {
   
   @Test(dataProvider = "validContactFromJson")
   public void testContactCreation(ContactData contact) throws Exception {
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     app.contact().create(contact, true);
     assertThat(app.contact().count(), equalTo(before.size() + 1));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     assertThat(after, equalTo(
             before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
   }
 
   @Test
   public void testContactCreationOld() throws Exception {
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     File photo = new File("src/test/resources/23234.jpg");
     ContactData contact = new ContactData()
-            .withFirstName("first1").withLastName( "surname").withHomePhone("88124561236").withMobilePhone("79126789023").withWorkPhone("88123128547").withEmailAddress("first.surname@gmail.com").withGroup("123").withPhoto(photo);
+            .withFirstName("first1").withLastName( "surname").withAddress("address").withHomePhone("88124561236")
+            .withMobilePhone("79126789023").withWorkPhone("88123128547").withEmailAddress("first.surname@gmail.com")
+            .withEmailAddress2("first.surname2@gmail.com").withEmailAddress3("first.surname3@gmail.com").withGroup("123").withPhoto(photo);
     app.contact().create(contact, true);
     assertThat(app.contact().count(), equalTo(before.size() + 1));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     assertThat(after, equalTo(
             before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
   }
