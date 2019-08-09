@@ -10,7 +10,6 @@ import ru.stqa.pft.addressbook.model.Groups;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -68,12 +67,21 @@ public class GroupCreationTests extends TestBase {
                     .withFooter(g.getFooter().replace("\r\n", "\n")))
             .collect(Collectors.toSet()));
     assertThat(app.group().count(), equalTo(before.size() + 1));
-    assertThat(afterdb.stream()
-                    .sorted(Comparator.comparing(GroupData :: getId))
-                    .collect(Collectors.toList()),
-            equalTo(beforedb.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt())).stream()
-                    .sorted(Comparator.comparing(GroupData::getId))
-                    .collect(Collectors.toList())));
+    assertThat(afterdb, equalTo(beforedb.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+    verifyGroupListInUI();
+  }
+
+  @Test
+  public void testGroupCreationOld() throws Exception {
+    app.goTo().groupPage();
+    Groups before = app.group().all();
+    GroupData group = new GroupData().withName("TestGroup2");
+    app.group().create(group);
+    Groups after = app.group().all();
+    assertThat(app.group().count(), equalTo(before.size() + 1));
+    assertThat(after, equalTo(
+            before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+    verifyGroupListInUI();
   }
 
   @Test(enabled = false)
