@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Collections {
   public static void main(String[] args) {
-   /* String[] langs = new String[4];
+  /* String[] langs = new String[4];
    * langs[0] = "Java";
    * langs[1] = "C#";
    * langs[2] = "Python";
@@ -19,7 +19,7 @@ public class Collections {
     }
 
   /*
-    List<String> languages = new ArrayList<String>;
+    List<String> languages = new ArrayList<String>();
     languages.add("Java");
     languages.add("C#");
     languages.add("Python");
@@ -27,6 +27,11 @@ public class Collections {
 */
     List<String> languages = Arrays.asList("Java", "C#", "Python", "PHP");
 
+  /*
+    for (int i = 0; i < languages.size(); i++) {
+      System.out.println("Я хочу выучить " + languages.get(i));
+    }
+*/
     for (String l : languages) {
       System.out.println("Я хочу выучить " + l);
     }

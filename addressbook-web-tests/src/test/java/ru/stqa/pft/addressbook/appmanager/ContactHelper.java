@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.Groups;
 import java.util.List;
 import static ru.stqa.pft.addressbook.tests.TestBase.app;
 
@@ -61,6 +62,42 @@ public class ContactHelper extends BaseHelper {
     click(By.cssSelector("input[value='Update']"));
   }
 
+  public void selectGroup(ContactData contact) {
+    if (contact.getGroups().size() == 0) {
+      new Select(wd.findElement(By.cssSelector("select[name='to_group']"))).selectByIndex(1);
+    } else {
+      Groups allGroups = app.db().groups();
+      Groups addedGroups = contact.getGroups();
+      if (addedGroups.size() < allGroups.size()) {
+        allGroups.removeAll(addedGroups);
+        ContactData contactWithNewGroup = new ContactData().inGroup(allGroups.iterator().next());
+        new Select(wd.findElement(By.cssSelector("select[name='to_group']")))
+                .selectByVisibleText(contactWithNewGroup.getGroups().iterator().next().getName());
+      }
+    }
+  }
+
+
+  public void showAllGroups() {
+    new Select(wd.findElement(By.cssSelector("select[name='group']"))).selectByVisibleText("[all]");
+  }
+
+  public void filterByGroup(ContactData contact) {
+    new Select(wd.findElement(By.cssSelector("select[name='group']"))).selectByVisibleText(contact.getGroups().iterator().next().getName());
+  }
+
+  public void addToSelectedCroups() {
+    click(By.cssSelector("input[value='Add to']"));
+  }
+
+  public void showInSelectedGroup() {
+//    wd.findElement(By.xpath("//div//a[@href='./?group=" + id + "']")).click();
+    click(By.cssSelector("div.msgbox a"));
+  }
+
+  public void removeFromSelectedGroups() {
+    click(By.cssSelector("input[name='remove']"));
+  }
 
   public void deleteSelectedContacts() {
     click(By.cssSelector("input[value='Delete']"));
@@ -121,7 +158,8 @@ public class ContactHelper extends BaseHelper {
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
 /*    contactCache.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withAddress(address)
               .withHomePhone(phones[0]).withMobilePhone(phones[1]).withWorkPhone(phones[2])); */
-      contactCache.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withAddress(address).withAllPhones(allPhones).withAllEmailAddresses(allEmailAddresses));
+      contactCache.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withAddress(address)
+              .withAllPhones(allPhones).withAllEmailAddresses(allEmailAddresses));
     }
     return new Contacts(contactCache);
   }
