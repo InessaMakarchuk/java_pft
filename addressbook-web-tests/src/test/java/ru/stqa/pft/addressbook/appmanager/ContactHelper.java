@@ -7,9 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
-
 import java.util.List;
-
 import static ru.stqa.pft.addressbook.tests.TestBase.app;
 
 public class ContactHelper extends BaseHelper {
@@ -36,8 +34,9 @@ public class ContactHelper extends BaseHelper {
 
     if (creation) {
 
-      if (contactData.getGroup() != null) {
-        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      if (contactData.getGroups().size() > 0) {
+        Assert.assertTrue(contactData.getGroups().size() == 1);
+        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getName());
       } else {
         new Select(wd.findElement(By.cssSelector("select[name='new_group']"))).selectByIndex(1);
       }
