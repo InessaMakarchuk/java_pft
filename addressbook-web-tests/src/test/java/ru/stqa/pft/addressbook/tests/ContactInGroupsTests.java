@@ -6,7 +6,7 @@ import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
-import java.io.File;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -17,17 +17,33 @@ public class ContactInGroupsTests extends TestBase {
     if (app.db().contacts().size() == 0) {
       if (app.db().groups().size() == 0) {
         app.goTo().groupPage();
-        app.group().create(new GroupData().withName("another group"));
+        app.group().create(new GroupData().withName("group 1"));
+        app.group().create(new GroupData().withName("group 2"));
       }
       Groups groups = app.db().groups();
-      File photo = new File("src/test/resources/23234.jpg");
       app.contact().create(new ContactData()
               .withFirstName("first").withLastName("surname").withAddress("address").withHomePhone("88124561236")
               .withMobilePhone("79126789023").withWorkPhone("88123128547").withEmailAddress("first.surname@gmail.com")
               .withEmailAddress2("first.surname2@gmail.com").withEmailAddress3("first.surname3@gmail.com")
-              .withPhoto(photo).inGroup(groups.iterator().next()), true);
+              .inGroup(groups.iterator().next()), true);
+    } else {
+      for (ContactData contact : app.db().contacts()) {
+        if (contact.getGroups().size() == app.db().groups().size()) {
+          app.goTo().groupPage();
+          app.group().create(new GroupData().withName("new group"));
+          app.goTo().homePage();
+        } else if (contact.getGroups().size() == 0){
+          Groups groups = app.db().groups();
+          app.contact().create(new ContactData()
+                  .withFirstName("Ivan").withLastName("Petrov").withAddress("address test").withHomePhone("88121234567")
+                  .withMobilePhone("79129876543").withWorkPhone("88121478596").withEmailAddress("ivan.petrov@gmail.com")
+                  .withEmailAddress2("ipetrov@mail.ru").withEmailAddress3("ivan-petrov@yandex.ru")
+                  .inGroup(groups.iterator().next()), true);
+        } break;
+      }
     }
   }
+
 
   @Test
   public void testAddContactToGroup() {
@@ -36,17 +52,15 @@ public class ContactInGroupsTests extends TestBase {
     for (ContactData contact : contacts) {
       if (contact.getGroups().size() != groups.size()) {
         Groups groupsBefore = contact.getGroups();
-        app.contact().selectContactById(contact.getId());
-        app.contact().selectGroup(contact);
-        app.contact().addToSelectedCroups();
-        app.contact().showInSelectedGroup();
+        app.contact().addToGroup(contact);
         Contacts updatedContacts = app.db().contacts();
         for (ContactData updatedContact : updatedContacts) {
           if (updatedContact.getId() == contact.getId()) {
             Groups groupsAfter = updatedContact.getGroups();
             assertThat(groupsAfter.size(), equalTo(groupsBefore.size() + 1));
-            updatedContact.getGroups().removeAll(groupsBefore);
-            assertThat(groupsAfter, equalTo(groupsBefore.withAdded(updatedContact.getGroups().iterator().next())));
+            Groups groupsWithAdded = new Groups(groupsAfter);
+            groupsWithAdded.removeAll(groupsBefore);
+            assertThat(groupsAfter, equalTo(groupsBefore.withAdded(groupsWithAdded.iterator().next())));
           }
         }
         app.contact().showAllGroups();
@@ -61,10 +75,7 @@ public class ContactInGroupsTests extends TestBase {
     for (ContactData contact : contacts) {
       if (contact.getGroups().size() != 0) {
         Groups groupsBefore = contact.getGroups();
-        app.contact().filterByGroup(contact);
-        app.contact().selectContactById(contact.getId());
-        app.contact().removeFromSelectedGroups();
-        app.contact().showInSelectedGroup();
+        app.contact().removeFromGroup(contact);
         Contacts updatedContacts = app.db().contacts();
         for (ContactData updatedContact : updatedContacts) {
           if (updatedContact.getId() == contact.getId()) {
@@ -78,6 +89,7 @@ public class ContactInGroupsTests extends TestBase {
       }
     }
   }
+
 
   /* Проверка для UI, нужно чистить кэш при добавлении контакта в группу, требуется доработать
   @Test

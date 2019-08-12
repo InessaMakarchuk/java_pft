@@ -8,7 +8,9 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.Groups;
+
 import java.util.List;
+
 import static ru.stqa.pft.addressbook.tests.TestBase.app;
 
 public class ContactHelper extends BaseHelper {
@@ -64,7 +66,7 @@ public class ContactHelper extends BaseHelper {
 
   public void selectGroup(ContactData contact) {
     if (contact.getGroups().size() == 0) {
-      new Select(wd.findElement(By.cssSelector("select[name='to_group']"))).selectByIndex(1);
+      new Select(wd.findElement(By.cssSelector("select[name='to_group']"))).selectByIndex(0);
     } else {
       Groups allGroups = app.db().groups();
       Groups addedGroups = contact.getGroups();
@@ -72,7 +74,7 @@ public class ContactHelper extends BaseHelper {
         allGroups.removeAll(addedGroups);
         ContactData contactWithNewGroup = new ContactData().inGroup(allGroups.iterator().next());
         new Select(wd.findElement(By.cssSelector("select[name='to_group']")))
-                .selectByVisibleText(contactWithNewGroup.getGroups().iterator().next().getName());
+                .selectByValue(Integer.toString(contactWithNewGroup.getGroups().iterator().next().getId()));
       }
     }
   }
@@ -90,6 +92,13 @@ public class ContactHelper extends BaseHelper {
     click(By.cssSelector("input[value='Add to']"));
   }
 
+  public void addToGroup(ContactData contact) {
+    selectContactById(contact.getId());
+    selectGroup(contact);
+    addToSelectedCroups();
+    showInSelectedGroup();
+  }
+
   public void showInSelectedGroup() {
 //    wd.findElement(By.xpath("//div//a[@href='./?group=" + id + "']")).click();
     click(By.cssSelector("div.msgbox a"));
@@ -97,6 +106,13 @@ public class ContactHelper extends BaseHelper {
 
   public void removeFromSelectedGroups() {
     click(By.cssSelector("input[name='remove']"));
+  }
+
+  public void removeFromGroup(ContactData contact) {
+    filterByGroup(contact);
+    selectContactById(contact.getId());
+    removeFromSelectedGroups();
+    showInSelectedGroup();
   }
 
   public void deleteSelectedContacts() {
