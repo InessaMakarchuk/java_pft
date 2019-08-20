@@ -3,7 +3,6 @@ package ru.stqa.pft.mantis.appmanager;
 import biz.futureware.mantis.rpc.soap.client.*;
 import ru.stqa.pft.mantis.model.Issue;
 import ru.stqa.pft.mantis.model.Project;
-
 import javax.xml.rpc.ServiceException;
 import java.math.BigInteger;
 import java.net.MalformedURLException;
@@ -29,7 +28,7 @@ public class SoapHelper {
             .collect(Collectors.toSet());
   }
 
-  private MantisConnectPortType getMantisConnect() throws ServiceException, MalformedURLException {
+  public MantisConnectPortType getMantisConnect() throws ServiceException, MalformedURLException {
     return new MantisConnectLocator()
               .getMantisConnectPort(new URL(app.getProperty("mantisConnect.url")));
   }
@@ -49,5 +48,17 @@ public class SoapHelper {
             .withDescription(createdIssueData.getDescription())
             .withProject(new Project().withId(createdIssueData.getProject().getId().intValue())
                                       .withName(createdIssueData.getProject().getName()));
+  }
+
+  public Set<Issue> getIssues(Project project) throws RemoteException, MalformedURLException, ServiceException {
+    MantisConnectPortType mc = getMantisConnect();
+    IssueData[] issues = mc.mc_project_get_issues(app.getProperty("web.adminLogin"), app.getProperty("web.adminPassword"),
+            BigInteger.valueOf(project.getId()), BigInteger.valueOf(1), BigInteger.valueOf(20));
+    return Arrays.asList(issues).stream()
+            .map((g) -> new Issue().withId(g.getId().intValue())
+                    .withSummary(g.getSummary())
+                    .withDescription(g.getDescription())
+                    .withStatus(g.getStatus()))
+            .collect(Collectors.toSet());
   }
 }

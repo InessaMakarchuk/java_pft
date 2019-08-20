@@ -1,11 +1,14 @@
 package ru.stqa.pft.mantis.model;
 
+import biz.futureware.mantis.rpc.soap.client.ObjectRef;
+
 public class Issue {
 
   private int id;
   private String summary;
   private String description;
   private Project project;
+  private ObjectRef status;
 
   public int getId() {
     return id;
@@ -40,6 +43,15 @@ public class Issue {
 
   public Issue withProject(Project project) {
     this.project = project;
+    return this;
+  }
+
+  public ObjectRef getStatus() {
+    return status;
+  }
+
+  public Issue withStatus(ObjectRef status) {
+    this.status = status;
     return this;
   }
 }
