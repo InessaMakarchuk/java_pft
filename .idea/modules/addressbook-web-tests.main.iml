@@ -1,26 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id="addressbook-web-tests:test" external.linked.project.path="$MODULE_DIR$/../../addressbook-web-tests" external.root.project.path="$MODULE_DIR$/../../addressbook-web-tests" external.system.id="GRADLE" external.system.module.group="" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
-  <component name="FacetManager">
-    <facet type="hibernate" name="Hibernate">
-      <configuration>
-        <datasource-map>
-          <unit-entry name="hibernate.cfg.xml" value="adea3c5c-9ade-4e88-8647-0d801ade8cf6" />
-        </datasource-map>
-        <naming-strategy-map />
-        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/../../addressbook-web-tests/src/test/resources/hibernate.cfg.xml" />
-      </configuration>
-    </facet>
-  </component>
+<module external.linked.project.id="addressbook-web-tests:main" external.linked.project.path="$MODULE_DIR$/../../addressbook-web-tests" external.root.project.path="$MODULE_DIR$/../../addressbook-web-tests" external.system.id="GRADLE" external.system.module.group="" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
-    <output-test url="file://$MODULE_DIR$/../../addressbook-web-tests/out/test/classes" />
+    <output url="file://$MODULE_DIR$/../../addressbook-web-tests/out/production/classes" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../../addressbook-web-tests/src/test">
-      <sourceFolder url="file://$MODULE_DIR$/../../addressbook-web-tests/src/test/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../../addressbook-web-tests/src/test/resources" type="java-test-resource" />
+    <content url="file://$MODULE_DIR$/../../addressbook-web-tests/src/main">
+      <sourceFolder url="file://$MODULE_DIR$/../../addressbook-web-tests/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../addressbook-web-tests/src/main/resources" type="java-resource" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="addressbook-web-tests.main" />
     <orderEntry type="library" name="Gradle: org.testng:testng:6.14.3" level="project" />
     <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-java:3.141.59" level="project" />
     <orderEntry type="library" name="Gradle: org.hamcrest:java-hamcrest:2.0.0.0" level="project" />
@@ -71,5 +59,4 @@
     <orderEntry type="library" name="Gradle: org.jvnet.staxex:stax-ex:1.8" level="project" />
     <orderEntry type="library" name="Gradle: com.sun.xml.fastinfoset:FastInfoset:1.2.15" level="project" />
   </component>
-  <component name="TestModuleProperties" production-module="addressbook-web-tests.main" />
 </module>
