@@ -1,0 +1,20 @@
+<list>
+  <contact>
+    <firstName>firstname 0</firstName>
+    <lastName>lastname 0</lastName>
+    <address>address 0</address>
+    <emailAddress>emailaddress+0@.com</emailAddress>
+  </contact>
+  <contact>
+    <firstName>firstname 1</firstName>
+    <lastName>lastname 1</lastName>
+    <address>address 1</address>
+    <emailAddress>emailaddress+1@.com</emailAddress>
+  </contact>
+  <contact>
+    <firstName>firstname 2</firstName>
+    <lastName>lastname 2</lastName>
+    <address>address 2</address>
+    <emailAddress>emailaddress+2@.com</emailAddress>
+  </contact>
+</list>
