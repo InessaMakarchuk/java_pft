@@ -64,7 +64,7 @@ public class ContactInGroupsTests extends TestBase {
           }
         }
         app.contact().showAllGroups();
-      }
+      } break;
     }
   }
 
@@ -86,7 +86,7 @@ public class ContactInGroupsTests extends TestBase {
           }
         }
         app.contact().showAllGroups();
-      }
+      } break;
     }
   }
 
