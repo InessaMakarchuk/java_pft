@@ -85,7 +85,8 @@ public class ContactHelper extends BaseHelper {
   }
 
   public void filterByGroup(ContactData contact) {
-    new Select(wd.findElement(By.cssSelector("select[name='group']"))).selectByVisibleText(contact.getGroups().iterator().next().getName());
+    new Select(wd.findElement(By.cssSelector("select[name='group']")))
+            .selectByValue(Integer.toString(contact.getGroups().iterator().next().getId()));
   }
 
   public void addToSelectedCroups() {
